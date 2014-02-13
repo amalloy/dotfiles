@@ -1,0 +1,11 @@
+[user]
+        email = alan@malloys.org
+        name = Alan Malloy
+[color]
+        ui = true
+[alias]
+        s = status --short
+        fstat = !git fetch && git s
+        ff = !git fstat && git merge --ff-only @{u}
+[help]
+	autocorrect = -1

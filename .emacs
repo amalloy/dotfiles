@@ -48,6 +48,18 @@ the current position of point, then move it to the beginning of the line."
                                 (interactive)
                                 (switch-to-buffer "*scratch*")))
 
+(global-set-key (kbd "C-c a") (lambda ()
+                                (interactive)
+                                (when (equal ".clj" (substring (buffer-file-name) -4))
+                                  (paredit-mode t))
+                                (let ((pt (point)))
+                                  (beginning-of-buffer)
+                                  (if (re-search-forward "^\\([-+=]\\)\\1\\{5,\\}" nil t)
+                                      (error "%s" "Found git conflict markers")
+                                    (goto-char pt)))
+                                (save-buffer)
+                                (shell-command (format "git add %s" (buffer-file-name)))))
+
 (global-unset-key "\C-t")
 (global-unset-key "\M-c")
 

@@ -44,6 +44,12 @@
         (paredit-mode 1)
         (local-set-key (kbd "<M-left>") 'paredit-convolute-sexp)
         (local-set-key (kbd "M-k") 'paredit-forward-kill-word)
+        (local-set-key (kbd "C-]") 'paredit-forward-barf-sexp)
+        (local-set-key (kbd "C-c [") 'paredit-wrap-square)
+        (local-set-key (kbd "C-M-w") 'paredit-backward-up)
+        (local-set-key (kbd "C-M-e") 'paredit-forward-up)
+        (local-set-key (kbd "C-M-s") 'paredit-backward-down)
+        (local-set-key (kbd "C-M-d") 'paredit-forward-down)
         (auto-complete-mode 1))))
 
 ;; correctly tab defprotocols, etc

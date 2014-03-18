@@ -76,7 +76,8 @@ the current position of point, then move it to the beginning of the line."
                                 (save-buffer)
                                 (shell-command (format "git add %s" (buffer-file-name)))))
 
-(global-unset-key "\C-t")
+(global-set-key (kbd "C-t") 'transpose-sexps)
+
 (global-unset-key "\M-c")
 
 (when (window-system)

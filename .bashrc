@@ -86,6 +86,7 @@ export PATH=~/bin:$PATH
 export EDITOR="emacs -nw"
 
 export ROGUEOPTS="name=Alan,passgo,fruit=apple,flush=true"
+export VIRTUAL_ENV_DISABLE_PROMPT='1'
 
 export GPG_TTY=$(tty)
 

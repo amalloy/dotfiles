@@ -6,9 +6,11 @@
 (require 'auto-complete)
 (require 'paredit)
 (require 'clojure-mode)
+(require 'ido-ubiquitous)
 
 (delete-selection-mode 1)
 (ido-mode 1)
+(ido-ubiquitous 1)
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
 (tool-bar-mode 0)

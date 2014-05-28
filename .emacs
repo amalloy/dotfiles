@@ -129,6 +129,7 @@ the current position of point, then move it to the beginning of the line."
  '(clojure-always-indent nil)
  '(clojure-defun-indents (quote (at-revision build-protocol)))
  '(clojure-mode-use-backtracking-indent t)
+ '(clojure-swank-command "lein with-profile +swank jack-in %s")
  '(haskell-mode-hook (quote (turn-on-haskell-indentation)))
  '(initial-major-mode (quote clojure-mode))
  '(only-global-abbrevs t)

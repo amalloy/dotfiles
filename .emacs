@@ -3,11 +3,11 @@
   (add-to-list 'load-path f))
 (load-file "~/.emacs.d/init.el")
 
+(require 'ido-ubiquitous)
 (require 'auto-complete)
 (require 'paredit)
 (require 'clojure-mode)
 (require 'refheap)
-(require 'ido-ubiquitous)
 
 (delete-selection-mode 1)
 (ido-mode 1)

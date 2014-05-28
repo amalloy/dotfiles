@@ -28,6 +28,28 @@ the current position of point, then move it to the beginning of the line."
     (when (eq pt (point))
       (beginning-of-line))))
 
+(defun useful-debug (&optional remove)
+  (interactive "P")
+  (let ((import-string "\n  (:use flatland.useful.debug)"))
+    (if remove
+        (save-excursion
+          (beginning-of-buffer)
+          (while (search-forward import-string nil t)
+            (replace-match ""))
+          (beginning-of-buffer)
+          (while (search-forward-regexp "\n\\s-*\\(\\?!?\\|(\\?!?)\\)" nil t)
+            (replace-match ""))
+          (beginning-of-buffer)
+          (while (search-forward-regexp "(\\?!?\\s-+" nil t)
+            ;;(forward-sexp)
+            ;;(backward-sexp)
+            (paredit-raise-sexp)))
+      (save-excursion
+        (beginning-of-buffer)
+        (forward-sexp)
+        (paredit-backward-down)
+        (insert import-string)))))
+
 (global-set-key "\C-a" 'smart-line-beginning)
 (global-set-key (kbd "C-c s") (lambda ()
                                 (interactive)
@@ -36,6 +58,7 @@ the current position of point, then move it to the beginning of the line."
 (global-set-key (kbd "C-x =") (lambda ()
                                 (interactive)
                                 (diff-buffer-with-file (current-buffer))))
+(global-set-key (kbd "C-c d") 'useful-debug)
 
 (global-set-key (kbd "C-x !")
                 (lookup-key (current-global-map) (kbd "C-x 1")))

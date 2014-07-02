@@ -74,6 +74,7 @@ the current position of point, then move it to the beginning of the line."
 (global-set-key (kbd "C-c b") (lambda ()
                                 (interactive)
                                 (switch-to-buffer "*scratch*")))
+(global-set-key (kbd "C-c f") 'find-grep)
 
 (global-set-key (kbd "C-c g") (lambda ()
                                 (interactive)
@@ -129,7 +130,8 @@ the current position of point, then move it to the beginning of the line."
  '(clojure-always-indent nil)
  '(clojure-defun-indents (quote (at-revision build-protocol)))
  '(clojure-mode-use-backtracking-indent t)
- '(clojure-swank-command "lein with-profile +swank jack-in %s")
+ '(setq clojure-swank-command "lein with-profile +swank jack-in %s")
+ '(grep-find-command (quote ("find . -type f -exec grep -nH -Pe '' {} +" . 36)))
  '(haskell-mode-hook (quote (turn-on-haskell-indentation)))
  '(initial-major-mode (quote clojure-mode))
  '(only-global-abbrevs t)

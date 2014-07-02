@@ -8,4 +8,8 @@
         fstat = !git fetch && git s
         ff = !git fstat && git merge --ff-only @{u}
 [help]
-	autocorrect = -1
+        autocorrect = -1
+[core]
+	attributesfile = /home/akm/.config/git/gitattributes
+[diff "clojure"]
+	xfuncname = (^\\(.*|\\s*\\(defn.*)

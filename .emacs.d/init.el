@@ -65,3 +65,6 @@
 ;; (remove-hook 'before-save-hook 'whitespace-cleanup)
 
 (setq auto-mode-alist (cons '("\\.cljs$" . clojure-mode) auto-mode-alist))
+
+(add-hook 'makefile-mode-hook (lambda ()
+                                (setq indent-tabs-mode t)))

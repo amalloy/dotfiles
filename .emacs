@@ -128,9 +128,10 @@ the current position of point, then move it to the beginning of the line."
  '(abbrev-mode t t)
  '(backup-directory-alist (quote (("." . "~/.emacs-backups"))))
  '(clojure-always-indent nil)
- '(clojure-defun-indents (quote (at-revision build-protocol)))
+ '(clojure-defun-indents (quote (at-revision build-protocol prop/for-all)))
  '(clojure-mode-use-backtracking-indent t)
- '(setq clojure-swank-command "lein with-profile +swank jack-in %s")
+ '(clojure-swank-command "lein with-profile +swank jack-in %s")
+ '(diff-switches "-u")
  '(grep-find-command (quote ("find . -type f -exec grep -nH -Pe '' {} +" . 36)))
  '(haskell-mode-hook (quote (turn-on-haskell-indentation)))
  '(initial-major-mode (quote clojure-mode))
@@ -152,3 +153,4 @@ the current position of point, then move it to the beginning of the line."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 180 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
+(put 'narrow-to-region 'disabled nil)

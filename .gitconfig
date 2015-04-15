@@ -13,3 +13,5 @@
 	attributesfile = /home/akm/.config/git/gitattributes
 [diff "clojure"]
 	xfuncname = (^\\(.*|\\s*\\(defn.*)
+[rerere]
+	enabled = true

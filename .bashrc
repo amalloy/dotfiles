@@ -90,5 +90,5 @@ export VIRTUAL_ENV_DISABLE_PROMPT='1'
 
 export GPG_TTY=$(tty)
 
-alias clojars='lein deps && scp `lein do pom, jar | cut -d" " -f2` clojars:'
+export LEIN_FAST_TRAMPOLINE=y
 alias e='emacs -nw'

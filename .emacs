@@ -130,7 +130,7 @@ the current position of point, then move it to the beginning of the line."
  '(clojure-always-indent nil)
  '(clojure-defun-indents (quote (at-revision build-protocol prop/for-all)))
  '(clojure-mode-use-backtracking-indent t)
- '(clojure-swank-command "lein with-profile +swank jack-in %s")
+ '(clojure-swank-command "LEIN_FAST_TRAMPOLINE=y lein trampoline with-profile +swank jack-in %s")
  '(diff-switches "-u")
  '(grep-find-command (quote ("find . -type f -exec grep -nH -Pe '' {} +" . 36)))
  '(haskell-mode-hook (quote (turn-on-haskell-indentation)))

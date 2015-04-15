@@ -58,7 +58,11 @@ the current position of point, then move it to the beginning of the line."
 (global-set-key (kbd "C-x =") (lambda ()
                                 (interactive)
                                 (diff-buffer-with-file (current-buffer))))
+(global-set-key (kbd "C-c r") (lambda ()
+                                (interactive)
+                                (revert-buffer nil t)))
 (global-set-key (kbd "C-c d") 'useful-debug)
+
 
 (global-set-key (kbd "C-x !")
                 (lookup-key (current-global-map) (kbd "C-x 1")))

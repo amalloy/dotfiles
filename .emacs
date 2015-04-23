@@ -123,6 +123,13 @@ the current position of point, then move it to the beginning of the line."
                                   (define-key slime-repl-mode-map (kbd "<C-return>") nil)
                                   (setq lisp-indent-function 'clojure-indent-function)
                                   (set-syntax-table clojure-mode-syntax-table)))
+(add-hook 'c-mode-common-hook (lambda ()
+                                (local-set-key (kbd "M-,")
+                                               #'pop-tag-mark
+                                               ;; (lambda ()
+                                               ;;   (interactive)
+                                               ;;   (#'pop-tag-mark))
+                                               )))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

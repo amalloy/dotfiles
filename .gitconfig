@@ -11,6 +11,7 @@
         autocorrect = -1
 [core]
 	attributesfile = /home/akm/.config/git/gitattributes
+	excludesfile = ~/.global_gitignore
 [diff "clojure"]
 	xfuncname = (^\\(.*|\\s*\\(defn.*)
 [rerere]

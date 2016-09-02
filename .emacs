@@ -7,7 +7,7 @@
 (require 'auto-complete)
 (require 'paredit)
 (require 'clojure-mode)
-(require 'refheap)
+(require 'gist)
 
 (delete-selection-mode 1)
 (ido-mode 1)
@@ -38,6 +38,9 @@ the current position of point, then move it to the beginning of the line."
             (replace-match ""))
           (beginning-of-buffer)
           (while (search-forward-regexp "\n\\s-*\\(\\?!?\\|(\\?!?)\\)" nil t)
+            (replace-match ""))
+          (beginning-of-buffer)
+          (while (search-forward-regexp "(\\?)\\s-*" nil t)
             (replace-match ""))
           (beginning-of-buffer)
           (while (search-forward-regexp "(\\?!?\\s-+" nil t)
@@ -79,18 +82,10 @@ the current position of point, then move it to the beginning of the line."
                                 (interactive)
                                 (switch-to-buffer "*scratch*")))
 (global-set-key (kbd "C-c f") 'find-grep)
+(global-set-key (kbd "C-c F") 'toggle-frame-fullscreen)
 
-(global-set-key (kbd "C-c g") (lambda ()
-                                (interactive)
-                                (if (use-region-p)
-                                    (refheap-paste-region-private (region-beginning) (region-end))
-                                  (refheap-paste-buffer-private))))
-(global-set-key (kbd "C-c G") (lambda ()
-                                (interactive)
-                                (if (use-region-p)
-                                    (progn (message "active")
-                                           (refheap-paste-region (region-beginning) (region-end)))
-                                  (refheap-paste-buffer))))
+(global-set-key (kbd "C-c g") 'gist-region-or-buffer-private)
+(global-set-key (kbd "C-c G") 'gist-region-or-buffer)
 
 (global-set-key (kbd "C-c a") (lambda ()
                                 (interactive)
@@ -104,20 +99,29 @@ the current position of point, then move it to the beginning of the line."
                                 (save-buffer)
                                 (shell-command (format "git add %s" (buffer-file-name)))))
 
+(global-set-key (kbd "C-c p")
+                (lambda (&optional arg)
+                  "Switch the repl to the ns of the current .clj file, and switch to repl buffer."
+                  (interactive "p")
+                  (kmacro-exec-ring-item (quote ([3 134217840 return 3 26] 0 "%d")) arg)))
+
 (global-set-key (kbd "C-t") 'transpose-sexps)
 
 (global-unset-key "\M-c")
 
 (when (window-system)
   (global-unset-key "\C-z")
-  (dolist (key (list (kbd "C-x C-c") (kbd "s-q")))
+  (dolist (key (list (kbd "C-x C-c")))
     (global-set-key key (lambda ()
                           (interactive)
                           (message "Why would you ever leave?")))))
 
-(when (equal system-type 'darwin)
-  (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
-  (push "/usr/local/bin" exec-path))
+(if (equal system-type 'darwin)
+    (progn
+      ;; visible-bell seems broken on osx?
+      (setenv "PATH" (concat "~/bin:/usr/local/bin:" (getenv "PATH")))
+      (push "/usr/local/bin" exec-path))
+  (setq visible-bell t))
 
 (add-hook 'slime-repl-mode-hook (lambda ()
                                   (define-key slime-repl-mode-map (kbd "<C-return>") nil)
@@ -125,11 +129,7 @@ the current position of point, then move it to the beginning of the line."
                                   (set-syntax-table clojure-mode-syntax-table)))
 (add-hook 'c-mode-common-hook (lambda ()
                                 (local-set-key (kbd "M-,")
-                                               #'pop-tag-mark
-                                               ;; (lambda ()
-                                               ;;   (interactive)
-                                               ;;   (#'pop-tag-mark))
-                                               )))
+                                               #'pop-tag-mark)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -142,21 +142,32 @@ the current position of point, then move it to the beginning of the line."
  '(clojure-always-indent nil)
  '(clojure-defun-indents (quote (at-revision build-protocol prop/for-all gen/bind)))
  '(clojure-mode-use-backtracking-indent t)
- '(clojure-swank-command "LEIN_FAST_TRAMPOLINE=y lein trampoline with-profile +swank jack-in %s")
+ '(clojure-swank-command
+   "LEIN_FAST_TRAMPOLINE=y lein trampoline with-profile +swank jack-in %s")
+ '(column-number-mode t)
  '(diff-switches "-u")
- '(grep-find-command (quote ("find . -type f -exec grep -nH -Pie '' {} +" . 37)))
+ '(grep-find-command
+   (quote
+    ("find . -type f -not -name '*.o' -exec grep -nH -Pie '' {} +" . 54)))
  '(haskell-mode-hook (quote (turn-on-haskell-indentation)))
  '(initial-major-mode (quote clojure-mode))
+ '(menu-bar-mode nil)
  '(only-global-abbrevs t)
  '(open-paren-in-column-0-is-defun-start nil)
  '(refheap-token "dfcca00a-5a73-4ed0-bc34-b37910864098")
  '(refheap-user "amalloy")
- '(safe-local-variable-values (quote ((clojure-always-indent . defun) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby") (clojure-defun-indents quote (at-revision)))))
+ '(safe-local-variable-values
+   (quote
+    ((clojure-always-indent . defun)
+     (ruby-compilation-executable . "ruby")
+     (ruby-compilation-executable . "ruby1.8")
+     (ruby-compilation-executable . "ruby1.9")
+     (ruby-compilation-executable . "rbx")
+     (ruby-compilation-executable . "jruby"))))
  '(set-mark-command-repeat-pop t)
  '(tab-width 8)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(uniquify-strip-common-suffix t)
- '(visible-bell t)
  '(window-min-height 10)
  '(x-select-enable-clipboard t))
 (custom-set-faces
@@ -164,5 +175,5 @@ the current position of point, then move it to the beginning of the line."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 180 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 150 :width normal :foundry "unknown" :family "Courier New")))))
 (put 'narrow-to-region 'disabled nil)

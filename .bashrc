@@ -82,13 +82,38 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export PATH=~/bin:$PATH
+if [ -f /usr/local//etc/bash_completion ] && ! shopt -oq posix; then
+    . /usr/local//etc/bash_completion
+fi
+
+if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ] && ! shopt -oq posix; then
+    . /usr/local/etc/bash_completion.d/git-prompt.sh
+fi
+
+eval $(gpg-agent --daemon 2>/dev/null)
+
+export PATH=~/bin:~/.local/bin:/usr/local/opt/ccache/libexec:/usr/local/opt/coreutils/libexec/gnubin:$PATH
 export EDITOR="emacs -nw"
 
-export ROGUEOPTS="name=Alan,passgo,fruit=apple,flush=true"
 export VIRTUAL_ENV_DISABLE_PROMPT='1'
 
 export GPG_TTY=$(tty)
 
 export LEIN_FAST_TRAMPOLINE=y
 alias e='emacs -nw'
+
+export FACTUAL_SRC_DIR=~/src/clojure
+export BACK_HOME=~/src/factual/back
+export COORDINATOR_HOME=~/src/clojure/neutronic
+export EVENTS_HOME=~/src/factual/tasks
+
+# docker mumbo-jumbo
+$(boot2docker shellinit 2>/dev/null)
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+awssh() {
+    ssh ubuntu@${1} -i ~/.aws/audience.pem -o StrictHostKeyChecking=no
+}
+aessh() {
+    ssh ubuntu@${1} -i ~/.aws/audience_emr.pem -o StrictHostKeyChecking=no
+}

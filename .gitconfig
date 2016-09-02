@@ -1,18 +1,23 @@
 [user]
-        email = alan@malloys.org
-        name = Alan Malloy
+	email = alan@malloys.org
+	name = Alan Malloy
 [color]
-        ui = true
+	ui = true
 [alias]
-        s = status --short
-        fstat = !git fetch && git s
-        ff = !git fstat && git merge --ff-only @{u}
+	s = status --short
+	fstat = !git fetch && git s
+	ff = !git fstat && git merge --ff-only @{u}
 [help]
-        autocorrect = -1
+	autocorrect = -1
 [core]
-	attributesfile = /home/akm/.config/git/gitattributes
+	attributesfile = /Users/alanmalloy/.config/git/gitattributes
 	excludesfile = ~/.global_gitignore
 [diff "clojure"]
 	xfuncname = (^\\(.*|\\s*\\(defn.*)
 [rerere]
 	enabled = true
+[push]
+	default = simple
+[github]
+	user = amalloy
+	oauth-token = a75eb2594c60f3e3c20bab1df87547bb9aa299de

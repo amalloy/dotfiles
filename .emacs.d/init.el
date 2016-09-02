@@ -37,6 +37,7 @@
 ;; load paredit and auto-complete
 (require 'paredit)
 (require 'auto-complete)
+(require 'rect-replace)
 (dolist (mode '(clojure emacs-lisp lisp scheme lisp-interaction))
   (add-hook (first (read-from-string (concat (symbol-name mode)
                "-mode-hook")))
